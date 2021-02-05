@@ -73,3 +73,20 @@ class ExcelApp(xw.main.App):
             except:
                 print('failed to activate sheet during workbook.set_foreground()')
         book.set_foreground = types.MethodType(set_foreground, book)
+
+    @property
+    def locked(self):
+        if self.impl._xl.Interactive == True:
+            return False
+        else:
+            return True
+
+class NBAWorksheet(xw.main.Sheet):
+
+    def __init__(self, book, name):
+        self.workbook = book
+        super().__init__(name)
+        self.set_border_refs()
+    
+    def get_hwnd(self):
+        
